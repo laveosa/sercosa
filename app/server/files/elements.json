@@ -1,0 +1,26 @@
+[
+  {
+    "id": "12awsijxi",
+    "name": "Nik",
+    "age": "37",
+    "position": "developer"
+  },
+  {
+    "id": "22aw2ijxi",
+    "name": "Vik",
+    "age": "42",
+    "position": "developer"
+  },
+  {
+    "id": "13aw33jxi",
+    "name": "Damian",
+    "age": "27",
+    "position": "designer"
+  },
+  {
+    "id": "42aw44jxi",
+    "name": "Nat",
+    "age": "38",
+    "position": "HR"
+  }
+]
