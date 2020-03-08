@@ -37,8 +37,6 @@ server.get("/api/user?:id", async (req, res) => {
     (err, data) => {
       data = JSON.parse(data);
 
-      console.log(req.params.id);
-
       if (req.params.id) {
         let userId = req.params.id.split(":")[1];
         data = data.find(user => user.id === userId);
