@@ -11,6 +11,7 @@ server.set("view engine", "ejs");
 server.use(express.static("./app/client/"));
 server.use(myMidleware);
 
+// get all users
 server.get("/", (req, res) => {
   const _path = path.join(__dirname, "app/server/views/index.ejs");
   const _model = {
@@ -20,6 +21,7 @@ server.get("/", (req, res) => {
   res.render(_path, _model);
 });
 
+// get single user
 server.get("/api/users", (req, res) => {
   fs.readFile(
     path.join(__dirname, "app/server/files/elements.json"),
@@ -30,21 +32,23 @@ server.get("/api/users", (req, res) => {
   );
 });
 
-server.get("/api/user?:id", async (req, res) => {
+server.get("/api/user/:id", (req, res) => {
   fs.readFile(
     path.join(__dirname, "app/server/files/elements.json"),
     "utf8",
     (err, data) => {
       data = JSON.parse(data);
 
-      if (req.params.id) {
-        let userId = req.params.id.split(":")[1];
-        data = data.find(user => user.id === userId);
+      let lastUserID = data[data.length - 1].id;
+
+      if (req.params.id <= lastUserID) {
+        data = data.find(user => user.id === req.params.id);
+        res.json(data);
+      } else {
+        res.json({
+          message: "There is no such user ID"
+        });
       }
-
-      console.log(data);
-
-      res.json(data);
     }
   );
 });
