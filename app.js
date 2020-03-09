@@ -11,8 +11,15 @@ const PORT = process.env.PORT || 3000;
 
 server.set("view engine", "ejs");
 server.use(express.static(path.join(__dirname, "app")));
-server.use(bodyParser.urlencoded({ extended: false }));
-server.use(bodyParser.json());
+
+// standart exemple
+server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
+
+// extra exemple
+// server.use(bodyParser.urlencoded({ extended: false }));
+// server.use(bodyParser.json());
+
 server.use("/api/users", routUser);
 
 server.get("/", (req, res) => {
