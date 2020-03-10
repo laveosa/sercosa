@@ -5,24 +5,36 @@ const dotenv = require("dotenv").config();
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const routUser = require("./app/server/routes/api/members");
+const exphbs = require("express-handlebars");
 
-const server = express();
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-server.set("view engine", "ejs");
-server.use(express.static(path.join(__dirname, "app")));
+// add view engine
+app.engine(
+  "hbs",
+  exphbs({
+    defaultLayout: "main",
+    extname: "hbs"
+  })
+);
+app.set("view engine", "hbs");
 
-// standart exemple
-server.use(express.json());
-server.use(express.urlencoded({ extended: false }));
+// add static files
+app.use(express.static(path.join(__dirname, "app")));
 
-// extra exemple
-// server.use(bodyParser.urlencoded({ extended: false }));
-// server.use(bodyParser.json());
+// add body parser: standart exemple
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-server.use("/api/users", routUser);
+// add body parser: extra exemple
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 
-server.get("/", (req, res) => {
+// add all routes
+app.use("/api/users", routUser);
+
+app.get("/", (req, res) => {
   const _path = path.join(__dirname, "app/server/views/index.ejs");
   const _model = {
     title: "Main page"
@@ -31,4 +43,4 @@ server.get("/", (req, res) => {
   res.render(_path, _model);
 });
 
-server.listen(PORT, () => {});
+app.listen(PORT, () => {});
