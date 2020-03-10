@@ -15,13 +15,16 @@ app.engine(
   "hbs",
   exphbs({
     defaultLayout: "main",
+    layoutsDir: path.join(__dirname, "app/server/views/layouts/"),
+    partialsDir: path.join(__dirname, "app/server/views/components/"),
     extname: "hbs"
   })
 );
 app.set("view engine", "hbs");
+app.set("views", path.join(__dirname, "app/server/views"));
 
 // add static files
-app.use(express.static(path.join(__dirname, "app")));
+app.use(express.static(path.join(__dirname, "app/")));
 
 // add body parser: standart exemple
 app.use(express.json());
@@ -35,12 +38,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/users", routUser);
 
 app.get("/", (req, res) => {
-  const _path = path.join(__dirname, "app/server/views/index.ejs");
   const _model = {
     title: "Main page"
   };
 
-  res.render(_path, _model);
+  res.render("dashboard", _model);
 });
 
 app.listen(PORT, () => {});
