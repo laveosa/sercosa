@@ -4,7 +4,7 @@ const path = require("path");
 const dotenv = require("dotenv").config();
 const fs = require("fs");
 const bodyParser = require("body-parser");
-const routUser = require("./app/server/routes/api/members");
+const routUser = require("./app/server/routes/api/usersAPI.js");
 const exphbs = require("express-handlebars");
 
 const app = express();
@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 // app.use(bodyParser.json());
 
 // add all routes
-app.use("/api/users", routUser);
+app.use("/api/user", routUser);
 
 app.get("/", (req, res) => {
   const _model = {
